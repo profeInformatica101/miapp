@@ -13,8 +13,8 @@ public class ControlPanel extends JPanel {
     /**
 	 * Botonoes
 	 */
-    public JButton btnRun, btnClear, btnExit, btnFecha;
-
+    public JButton btnRun, btnClear, btnExit, btnFecha, btnCurl;
+    public JTextField txtUrl;
     public ControlPanel() {
 
   /**
@@ -29,22 +29,28 @@ public class ControlPanel extends JPanel {
  *
  */  
 //                    GridLayout(<FILAS>, <COLUMNAS>, <ESPACIO_HORIZONTAL>, <ESPACIO_VERTICAL>)
-        setLayout(new GridLayout(3, 1, 10, 10)); //Resultado visual: una columna con tres botones separados entre sí.
+        setLayout(new GridLayout(6, 1, 10, 10)); //Resultado visual: una columna con tres botones separados entre sí.
 //Esto evita que los botones queden pegados al borde del panel y mejora la estética.
 //                BorderFactory.createEmptyBorder(<ARRIBA>, <IZQUIERDA>, <ABAJO>, <DERECHA>)
         setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-
+        
+        txtUrl = new JTextField("https://example.com");
+        btnCurl = new JButton("🌐 Consultar");
         btnRun   = new JButton("▶  Ejecutar");    
         btnFecha = new JButton("⏲ Día y hora");   
         btnClear = new JButton("▷ Limpiar");      
         btnExit  = new JButton("⏻ Salir");    
         
-        System.out.println("codificación (UTF-8) ♜♞♝♛♚♟");
-        System.out.println("representación (fuente con glifos). ▶ ⏰ 🧹 🚪");
-
+        add(txtUrl);
+        add(btnCurl);
         add(btnRun);
         add(btnFecha);
         add(btnClear);
         add(btnExit);
+        
+        System.out.println("codificación (UTF-8) ♜♞♝♛♚♟");
+        System.out.println("representación (fuente con glifos). ▶ ⏰ 🧹 🚪");
+       
+
     }
 }

@@ -15,7 +15,11 @@ public class AppController {
         this.controlPanel = c;
         this.outputPanel  = o;
 
-        // Acciones de botones
+        /**##############################
+         * #    Accciones de Botones    #
+         * ##############################
+         */
+        controlPanel.btnCurl.addActionListener(this::onCurl);
         controlPanel.btnRun.addActionListener(this::onRun);
         controlPanel.btnFecha.addActionListener(this::onDate);
         controlPanel.btnClear.addActionListener(this::onClear);
@@ -71,5 +75,36 @@ public class AppController {
 
     private void onClear(ActionEvent e) {
         outputPanel.clear();
+    }
+    
+    private void onCurl(ActionEvent e) {
+        String url = controlPanel.txtUrl.getText().trim();
+        if (url.isEmpty()) {
+          JOptionPane.showMessageDialog(null, "Introduce una URL.", "Aviso", JOptionPane.WARNING_MESSAGE);
+          return;
+        }
+        outputPanel.append("$curl " + url);
+        System.out.println(">>> "+ url);
+        try {
+        	ProcessBuilder pb = new ProcessBuilder("curl", "-L", "-sS", url);
+            pb.redirectErrorStream(true);
+            Process process = pb.start();
+
+            new Thread(() -> {
+                try (var reader = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        outputPanel.append(line);
+                    }
+                } catch (Exception ex) {
+                    outputPanel.append("Error: " + ex.getMessage());
+                }
+            }).start();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error ejecutando proceso:\n" + ex.getMessage());
+        }
+    
     }
 }
