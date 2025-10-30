@@ -49,9 +49,6 @@ public class ComandoLs extends ComandoEjecutable {
                """;
     }
 
-    @Override
-    public String nombre() {
-        return "ls";
-    }
+
 }
 
